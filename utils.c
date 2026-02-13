@@ -26,11 +26,11 @@ static char	*dup_string(const char *s)
 	size_t	len;
 	char	*dup;
 
-	len = strlen(s);
+	len = ft_strlen(s);
 	dup = malloc(len + 1);
 	if (!dup)
 		return (NULL);
-	memcpy(dup, s, len);
+	ft_memcpy(dup, s, len);
 	dup[len] = '\0';
 	return (dup);
 }
@@ -41,14 +41,14 @@ static char	*join_cmd(char *dir, char *cmd)
 	size_t	len_dir;
 	size_t	len_cmd;
 
-	len_dir = strlen(dir);
-	len_cmd = strlen(cmd);
+	len_dir = ft_strlen(dir);
+	len_cmd = ft_strlen(cmd);
 	full = malloc(len_dir + len_cmd + 2);
 	if (!full)
 		return (NULL);
-	memcpy(full, dir, len_dir);
+	ft_memcpy(full, dir, len_dir);
 	full[len_dir] = '/';
-	memcpy(full + len_dir + 1, cmd, len_cmd);
+	ft_memcpy(full + len_dir + 1, cmd, len_cmd);
 	full[len_dir + len_cmd + 1] = '\0';
 	return (full);
 }
@@ -94,7 +94,7 @@ static char	**split_by_sep(const char *s, char sep)
 		arr[i] = malloc((size_t)(s - start) + 1);
 		if (!arr[i])
 			return (cleanup_parts(arr, i), NULL);
-		memcpy(arr[i], start, (size_t)(s - start));
+		ft_memcpy(arr[i], start, (size_t)(s - start));
 		arr[i][s - start] = '\0';
 		if (*s == sep)
 			s++;
@@ -113,9 +113,9 @@ char	*get_cmd_path(char *cmd, char **envp)
 
 	if (!cmd || !*cmd)
 		return (NULL);
-	if (strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/'))
 		return (dup_string(cmd));
-	while (*envp && strncmp(*envp, "PATH=", 5) != 0)
+	while (*envp && ft_strncmp(*envp, "PATH=", 5) != 0)
 		envp++;
 	if (!*envp)
 		return (NULL);
@@ -152,7 +152,7 @@ void	exec_command(char *cmd_str, char **envp)
 	if (!cmd_path)
 	{
 		write(2, "pipex: command not found: ", 25);
-		write(2, argv[0], strlen(argv[0]));
+		write(2, argv[0], ft_strlen(argv[0]));
 		write(2, "\n", 1);
 		free_strs(argv);
 		exit(127);

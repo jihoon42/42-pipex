@@ -29,7 +29,7 @@ static char	*dup_word(const char *start, size_t len)
 	word = malloc(len + 1);
 	if (!word)
 		return (NULL);
-	memcpy(word, start, len);
+	ft_memcpy(word, start, len);
 	word[len] = '\0';
 	return (word);
 }
